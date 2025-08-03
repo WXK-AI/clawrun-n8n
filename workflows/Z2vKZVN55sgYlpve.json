@@ -1,0 +1,403 @@
+{
+  "active": true,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Files": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form": {
+      "main": [
+        [
+          {
+            "node": "Find ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Files for Upload1": {
+      "main": [
+        [
+          {
+            "node": "Upload Files",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find ID": {
+      "main": [
+        [
+          {
+            "node": "Prepare Files for Upload1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Form1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Form2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-03T14:54:28.973Z",
+  "id": "Z2vKZVN55sgYlpve",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "File-Upload",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Batch File Upload to Google Drive",
+        "formDescription": "Use this form to upload multiple files to a specific Google Drive folder. Simply select your files and specify your target folder name. If the folder doesn't exist yet, we'll create it automatically for you. This streamlined process allows you to organize and store multiple files in one go, saving you time and effort.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "file",
+              "fieldType": "file",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c7a3023e-521e-41e3-9912-44e26e5decd4",
+      "name": "On form submission",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [
+        -860,
+        460
+      ],
+      "webhookId": "0c5c8b39-06a7-4d07-95be-b729d2a9eb6f",
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=data",
+        "name": "={{ $json.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('Find ID').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "c7f2d0c5-253f-46fb-a263-e133da93ab02",
+      "name": "Upload Files",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        660,
+        460
+      ],
+      "typeVersion": 3,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "AVVM2hd73YYjR24l",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 🗂️ Bulk File Upload to Google Drive with Folder Management\n\n## Overview\nThis workflow processes a form submission that accepts:\n- Multiple file uploads (any format)\n- Target folder name input\n\nThe workflow automatically:\n- Checks if the specified folder exists in Google Drive\n- Creates the folder if it doesn't exist\n- Uploads all files to the correct folder\n- Maintains original file names and structure\n\nPerfect for batch uploading files while keeping your Drive organized!\n",
+        "height": 520,
+        "width": 520,
+        "color": 5
+      },
+      "id": "634b5989-ebbf-45cb-9bef-3a8177167fa9",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1500,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🔄 Decision Point: Folder Check\nThe workflow splits into two paths based on folder existence:\n- ✅ TRUE: Use existing folder path\n- 🆕 FALSE: Create new folder path\n\n## 🗂️ Existing Folder Path (Upper)\n1. Prepare Files for Upload: Splits files for individual processing\n2. Upload Files: Uploads to existing folder maintaining structure\n\n## 📁 New Folder Path (Lower)\n1. Create Folder: Generates new folder in Drive\n2. Prepare Files for New Folder: Splits files for individual processing\n3. Upload to New Folder: Uploads to newly created folder",
+        "height": 380,
+        "width": 460,
+        "color": 5
+      },
+      "id": "8356f663-ab36-4b16-aa2d-7e6574eaa12b",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## ⚙️ File Processing Notes\n- All binary files are split individually for proper upload handling\n- Original file names and structure are preserved\n- Both paths ensure identical file organization\n\nalso see https://n8n.io/workflows/1621-split-out-binary-data/",
+        "height": 200,
+        "width": 360,
+        "color": 5
+      },
+      "id": "d801c6f9-4ef3-4a3c-ac92-0ba7397f72d1",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        820,
+        120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🔍 Search Query Pattern\n\nThe following search pattern looks for a folder with the specified name in a particular parent folder:\nMake sure to replace <folderId>\n\n```javascript\nmimeType='application/vnd.google-apps.folder' and name = '{{ $json.folderName }}' and '<folderId>' in parents\n```\n\n**Important**: Marl Always Output Data so you can check also if nothing found.",
+        "height": 280,
+        "width": 660,
+        "color": 5
+      },
+      "id": "8436bf31-e70a-4297-9922-59da270e5b97",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -700,
+        120
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Folder",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Research_Paper"
+                  },
+                  {
+                    "option": "n8n_upload"
+                  },
+                  {
+                    "option": "Internship"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        460
+      ],
+      "id": "8f777075-684e-48ba-9247-a4b6671cfc61",
+      "name": "Form",
+      "webhookId": "b79b7f02-55c8-4aa7-ada4-65415840ad70"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "returnAll": true,
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -660,
+        460
+      ],
+      "id": "61478ffb-d1dc-4358-a4b4-e8beb23fe73d",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "AVVM2hd73YYjR24l",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const inputItems = $input.all(); // Gets all items from the previous node\n\n// Ensure dropdownOptions is an array of objects\nconst dropdownOptions = inputItems.map(item => {\n  // Access properties safely, assuming 'name' and 'id' exist within 'item.json'\n  const name = item.json.name;\n  const id = item.json.id;\n\n  // Each option in the dropdown needs a 'label' and a 'value'\n  // Both label and value should be primitive types (string, number, boolean)\n  return {\n    label: name,\n    value: id\n  };\n});\n\n// The Code node must return an array of items.\n// Each item in the returned array MUST have a 'json' property that is an OBJECT.\n// In this case, we want to return a single item, and its 'json' property\n// will contain the array of dropdown options.\nreturn [\n  {\n    json: {\n      // We'll put the 'dropdownOptions' array under a key within this object,\n      // for example, 'options'.\n      // This makes 'json' an object, and inside it, 'options' is your array.\n      options: dropdownOptions\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -440,
+        460
+      ],
+      "id": "de5b213b-8661-422b-8e48-137fde1e171c",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "jsCode": "let results = [];\nconst items = $(\"On form submission\").all()\n\nfor (item of items) {\n    for (key of Object.keys(item.binary)) {\n        results.push({\n            json: {\n                fileName: item.binary[key].fileName\n            },\n            binary: {\n                data: item.binary[key],\n            }\n        });\n    }\n}\n\nreturn results;"
+      },
+      "id": "fff1b73c-d99c-4423-a285-373930f8cb79",
+      "name": "Prepare Files for Upload1",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        320,
+        460
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the input folder name.\n// IMPORTANT: Adjust '$json.folderName' to match the actual field name\n// from your previous node that provides the folder name (e.g., from a Form node).\nconst inputFolderName = $input.first().json.Folder;\n\n// Your predefined list of options (folder names and their IDs)\nconst options = [\n  {\n    \"label\": \"Research_Paper\",\n    \"value\": \"1mLFvkJ3ABXbUS7ndeM3Ng7g4xMn2347A\"\n  },\n  {\n    \"label\": \"Internship\",\n    \"value\": \"1ZCwg8o_MxvXATttObvjOI74oyKhqnICc\"\n  },\n  {\n    \"label\": \"n8n_upload\",\n    \"value\": \"19VDwgC9uaQC_-vcOUQ7S8vwEhfe0oGgS\"\n  }\n];\n\n// Find the matching option based on the input folder name (label)\nconst matchedOption = options.find(option => option.label === inputFolderName);\n\n// Determine the folder ID. If no match, set it to 'unknown_id'.\nconst folderId = matchedOption ? matchedOption.value : \"unknown_id\";\n\n// Return a new JSON object containing only the 'id' field.\nreturn [\n  {\n    json: {\n      id: folderId // Only the ID is returned\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        40,
+        460
+      ],
+      "id": "037da873-baa0-43f6-b431-a47aa53fc9fe",
+      "name": "Find ID"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7726f026-5b1d-4e0a-96d4-d2cb7882be20",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        460
+      ],
+      "id": "db66ce0d-97a6-4543-9b9e-0399ef5bea0d",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Form Submission Completed",
+        "completionMessage": "={{ $json.webViewLink }}\n\nhttps://xkai-n8n-free.hf.space/form/0c5c8b39-06a7-4d07-95be-b729d2a9eb6f",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        340
+      ],
+      "id": "2bbe43c5-8884-48a6-b3fb-cdbb5055c9d6",
+      "name": "Form1",
+      "webhookId": "12d77fce-caa1-4b58-ade2-08e99ef72c06",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Form Submission Failed",
+        "completionMessage": "=https://xkai-n8n-free.hf.space/workflow/5X5xZjrxstojtoZz",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        1260,
+        540
+      ],
+      "id": "cbb47238-c95b-4a47-8eea-79ca8203780d",
+      "name": "Form2",
+      "webhookId": "12d77fce-caa1-4b58-ade2-08e99ef72c06"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-08-03T16:01:21.000Z",
+  "versionId": "56514e19-523e-402e-b64f-57a769f4b3d5"
+}
