@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Search files and folders",
+            "node": "Form",
             "type": "main",
             "index": 0
           }
@@ -28,28 +28,6 @@
         [
           {
             "node": "Find ID",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Search files and folders": {
-      "main": [
-        [
-          {
-            "node": "Code",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code": {
-      "main": [
-        [
-          {
-            "node": "Form",
             "type": "main",
             "index": 0
           }
@@ -124,8 +102,8 @@
       "name": "On form submission",
       "type": "n8n-nodes-base.formTrigger",
       "position": [
-        -860,
-        460
+        -864,
+        464
       ],
       "webhookId": "0c5c8b39-06a7-4d07-95be-b729d2a9eb6f",
       "typeVersion": 2.2
@@ -150,8 +128,8 @@
       "name": "Upload Files",
       "type": "n8n-nodes-base.googleDrive",
       "position": [
-        660,
-        460
+        672,
+        464
       ],
       "typeVersion": 3,
       "alwaysOutputData": true,
@@ -173,7 +151,7 @@
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -1500,
+        -1504,
         240
       ],
       "typeVersion": 1
@@ -205,8 +183,8 @@
       "name": "Sticky Note2",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        820,
-        120
+        832,
+        128
       ],
       "typeVersion": 1
     },
@@ -221,8 +199,8 @@
       "name": "Sticky Note4",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -700,
-        120
+        -704,
+        128
       ],
       "typeVersion": 1
     },
@@ -254,47 +232,12 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 1,
       "position": [
-        -200,
-        460
+        -304,
+        464
       ],
       "id": "8f777075-684e-48ba-9247-a4b6671cfc61",
       "name": "Form",
       "webhookId": "b79b7f02-55c8-4aa7-ada4-65415840ad70"
-    },
-    {
-      "parameters": {
-        "resource": "fileFolder",
-        "returnAll": true,
-        "filter": {},
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "position": [
-        -660,
-        460
-      ],
-      "id": "61478ffb-d1dc-4358-a4b4-e8beb23fe73d",
-      "name": "Search files and folders",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "AVVM2hd73YYjR24l",
-          "name": "Google Drive account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "jsCode": "const inputItems = $input.all(); // Gets all items from the previous node\n\n// Ensure dropdownOptions is an array of objects\nconst dropdownOptions = inputItems.map(item => {\n  // Access properties safely, assuming 'name' and 'id' exist within 'item.json'\n  const name = item.json.name;\n  const id = item.json.id;\n\n  // Each option in the dropdown needs a 'label' and a 'value'\n  // Both label and value should be primitive types (string, number, boolean)\n  return {\n    label: name,\n    value: id\n  };\n});\n\n// The Code node must return an array of items.\n// Each item in the returned array MUST have a 'json' property that is an OBJECT.\n// In this case, we want to return a single item, and its 'json' property\n// will contain the array of dropdown options.\nreturn [\n  {\n    json: {\n      // We'll put the 'dropdownOptions' array under a key within this object,\n      // for example, 'options'.\n      // This makes 'json' an object, and inside it, 'options' is your array.\n      options: dropdownOptions\n    }\n  }\n];"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        -440,
-        460
-      ],
-      "id": "de5b213b-8661-422b-8e48-137fde1e171c",
-      "name": "Code"
     },
     {
       "parameters": {
@@ -305,7 +248,7 @@
       "type": "n8n-nodes-base.code",
       "position": [
         320,
-        460
+        464
       ],
       "typeVersion": 2
     },
@@ -316,8 +259,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        40,
-        460
+        48,
+        464
       ],
       "id": "037da873-baa0-43f6-b431-a47aa53fc9fe",
       "name": "Find ID"
@@ -351,7 +294,7 @@
       "typeVersion": 2.2,
       "position": [
         880,
-        460
+        464
       ],
       "id": "db66ce0d-97a6-4543-9b9e-0399ef5bea0d",
       "name": "If"
@@ -366,8 +309,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 1,
       "position": [
-        1260,
-        340
+        1264,
+        352
       ],
       "id": "2bbe43c5-8884-48a6-b3fb-cdbb5055c9d6",
       "name": "Form1",
@@ -384,8 +327,8 @@
       "type": "n8n-nodes-base.form",
       "typeVersion": 1,
       "position": [
-        1260,
-        540
+        1264,
+        544
       ],
       "id": "cbb47238-c95b-4a47-8eea-79ca8203780d",
       "name": "Form2",
@@ -399,6 +342,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-03T16:01:21.000Z",
-  "versionId": "56514e19-523e-402e-b64f-57a769f4b3d5"
+  "updatedAt": "2025-08-04T20:17:42.000Z",
+  "versionId": "e066f23f-d84b-409a-91ee-e7b49d63e857"
 }
