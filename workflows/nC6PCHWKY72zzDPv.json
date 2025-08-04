@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "On clicking 'execute'": {
       "main": [
@@ -933,11 +933,17 @@
   ],
   "pinData": {},
   "settings": {
-    "executionOrder": "v1"
+    "executionOrder": "v1",
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2025-08-03T16:12:19.000Z",
-  "versionId": "47bc7196-301d-4651-ac01-e6d139aeef50"
+  "triggerCount": 1,
+  "updatedAt": "2025-08-03T16:13:09.000Z",
+  "versionId": "399b93ad-6395-404d-82d6-365e2277913e"
 }
