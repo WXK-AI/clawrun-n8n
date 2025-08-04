@@ -935,7 +935,8 @@
   "settings": {
     "executionOrder": "v1",
     "saveExecutionProgress": true,
-    "callerPolicy": "workflowsFromSameOwner"
+    "callerPolicy": "workflowsFromSameOwner",
+    "timezone": "Asia/Kuala_Lumpur"
   },
   "staticData": {
     "node:Schedule Trigger": {
@@ -944,6 +945,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-08-03T16:13:09.000Z",
-  "versionId": "399b93ad-6395-404d-82d6-365e2277913e"
+  "updatedAt": "2025-08-04T11:40:32.000Z",
+  "versionId": "ee2b4245-4c59-45a1-b7de-49124a25332a"
 }
