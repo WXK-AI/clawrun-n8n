@@ -1,0 +1,624 @@
+{
+  "active": false,
+  "connections": {
+    "Set useful fields": {
+      "main": [
+        [
+          {
+            "node": "Filter URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Set Field - llms.txt Row",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter URLs": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize - Concatenate": {
+      "main": [
+        [
+          {
+            "node": "Set Fields - llms.txt Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Fields - llms.txt Content": {
+      "main": [
+        [
+          {
+            "node": "Generate llms.txt file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Field - llms.txt Row": {
+      "main": [
+        [
+          {
+            "node": "Summarize - Concatenate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form - Screaming frog internal_html.csv upload": {
+      "main": [
+        [
+          {
+            "node": "Extract data from Screaming Frog file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract data from Screaming Frog file": {
+      "main": [
+        [
+          {
+            "node": "Set useful fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-05T03:47:40.068Z",
+  "id": "MXScum8XK8vf1Svf",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Form - Screaming Frog internal_html.csv upload  \n\nThis form node is used to trigger the workflow.  \n\nIt contains **three input fields**:  \n- Name of the website  \n- Short description of the website  \n- **Screaming Frog** export containing the internal URLs  \n\n\n\nIt is recommended to use the **internal_html.csv** export, but **internal_all.csv** will also work, as the workflow includes a filter to process only indexable URLs.\n",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "896f0679-f153-490d-a9b0-306f9d825009",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1376,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Extract data from Screaming Frog file\n\nThis node extracts data from the **CSV file** provided by the user.  \n\nIt produces an output that is **easily usable** in the following nodes.  \n\n⚠️ **Caution:**  \nIf the uploaded file is **not** the expected Screaming Frog export, the workflow will still proceed but will likely **fail in the next steps** due to missing required fields.  \n\n",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "68fea466-c83a-4d47-bed8-259b7125ed1c",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1792,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Set Useful Fields  \n\nThis node sets **7 key fields** from the Screaming Frog export:  \n\n- `url` → from the **\"Address\"** column  \n- `title` → from the **\"Title 1\"** column  \n- `description` → from the **\"Meta Description 1\"** column  \n- `status` → from the **\"Status Code\"** column  \n- `indexability` → from the **\"Indexability\"** column  \n- `content_type` → from the **\"Content Type\"** column  \n- `word_count` → from the **\"Word Count\"** column  \n\n\n**Multi-language compatibility**  \nIf you're using Screaming Frog in **French, Italian, German, or Spanish**, the column names will be different.  \nHowever, the workflow is designed to handle this, so it will **still work correctly**! 🥳\n",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "a445bc79-9f06-46fc-9891-d2568bf39689",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2224,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0e7d4a06-83fc-4834-93fe-2e758cbe2307",
+              "name": "url",
+              "type": "string",
+              "value": "={{ $json.Address || $json.Adresse || $json.Dirección || $json.Indirizzo }}"
+            },
+            {
+              "id": "c82f4d4c-9d0b-4c7d-9647-5d0240b58643",
+              "name": "title",
+              "type": "string",
+              "value": "={{ $json['Title 1'] || $json['Titolo 1'] || $json['Titolo 1'] || $json['Título 1'] || $json['Titel 1'] }}"
+            },
+            {
+              "id": "abea81db-ce3b-4ac1-bd21-09ccfffb567a",
+              "name": "description",
+              "type": "string",
+              "value": "={{ $json['Meta Description 1'] || $json['Meta description 1'] }}"
+            },
+            {
+              "id": "2ca75d74-70f8-400b-b862-9da186135915",
+              "name": "statut",
+              "type": "string",
+              "value": "={{ $json['Status Code'] || $json['Code HTTP'] || $json['Status-Code'] || $json['Código de respuesta'] || $json['Codice di stato']}}"
+            },
+            {
+              "id": "754d3202-38b0-4d79-ba24-8078b3244307",
+              "name": "indexability",
+              "type": "string",
+              "value": "={{ $json.Indexability || $json.Indexabilité || $json.Indicizzabilità || $json.Indexabilidad || $json.Indexierbarkeit}}"
+            },
+            {
+              "id": "8bc6583d-bb34-4d22-b310-fe79bb8ac85d",
+              "name": "content_type",
+              "type": "string",
+              "value": "={{ $json['Content Type'] || $json['Type de contenu'] || $json['Tipo di contenuto'] || $json['Tipo de contenido'] || $json['Inhaltstyp']}}"
+            },
+            {
+              "id": "c874ba1a-769e-43d3-9555-8c9914ca9b76",
+              "name": "word_count",
+              "type": "string",
+              "value": "={{ $json['Word Count'] || $json['Nombre de mots'] || $json['Conteggio delle parole'] || $json['Conteggio delle parole'] || $json['Recuento de palabras'] || $json['Wortanzahl'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "02b4a102-786b-400a-b5e0-10944fb10f20",
+      "name": "Set useful fields",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        2352,
+        128
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "inputText": "=url : {{ $json.url }}\ntitle : {{ $json.title }}\ndescription : {{ $json.description }}\nwords count : {{ $json.word_count }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "useful_content",
+              "description": "Pages that are likely to contain high-quality content, making them suitable for inclusion in a file that aids content discovery for an LLM. "
+            },
+            {
+              "category": "other_content",
+              "description": "Pages that should not be included (e.g., pagination, or low-value content)."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "cc730265-7316-4aee-8304-07004a2c00d2",
+      "name": "Text Classifier",
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "position": [
+        3280,
+        128
+      ],
+      "typeVersion": 1,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "44e23fd0-dd0e-4c2e-8223-b4f4ce4a6171",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        3200,
+        304
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {},
+      "id": "541ba86b-64e3-49d1-b9c6-0d23a311700b",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        3600,
+        272
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Filter URLs \n\nThis **filter node** is used to keep only the URLs that meet the following conditions:  \n- `status` = **200**  \n- `indexability` = **indexable**  \n- `content_type` contains **text/html**  \n\n\nThese filters are even **more useful** if the uploaded file is an **internal_all.csv** instead of an **internal_html.csv**.  \n\n### **Tips:**  \nYou can **add more filters** to refine the URLs included in your `llms.txt` file.  \n\n💡 **Examples:**  \n- **Filter by word count** → Ensure pages contain **enough text content**.  \n- **Filter by URL path** → Keep only **specific folders or categories** in the `llms.txt` file.  \n- **Filter by meta description** → Exclude URLs **without a meta description**, as this field will be used in the `llms.txt` file to describe each piece of content.  \n",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "65b12b63-4766-4d3a-84a2-21fd3a5b3e23",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2640,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "cef4feaa-1c46-45b1-92b7-f5c2051b1dc5",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              },
+              "leftValue": "={{ Number($json.statut) }}",
+              "rightValue": 200
+            },
+            {
+              "id": "bb821656-9740-4da4-8aa9-f65ad098c470",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ [\"Indexable\", \"Indicizzabile\", \"Indexierbar\"].includes($json.indexability) }}",
+              "rightValue": "={{ \"Indexable\" || \"Indicizzabile\" }}"
+            },
+            {
+              "id": "5c93ddb8-8091-406a-bc04-fa14e8b73fb9",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              },
+              "leftValue": "={{ $json.content_type }}",
+              "rightValue": "text/html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8cedf022-a03c-4c9f-b86f-5d8392a9810d",
+      "name": "Filter URLs",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        2752,
+        128
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "content": "## Text Classifier\n\n🚫 **This node is deactivated by default** in the template.  \n\nYou can **enable it** if you want to add a more **\"intelligent\" 🤓 filter** to refine the URLs included in the `llms.txt` file, helping LLMs discover and prioritize valuable content.\n\n### How It Works:\nThis node has **two outputs**:  \n- **`useful_content`** → Pages that are **likely to contain high-quality content**, making them suitable for inclusion in a file that **aids content discovery for an LLM**.  \n- **`other_content`** → Pages that should **not** be included (e.g., pagination or low-value content).  \n\n\nYou can **modify the description** in the node to fine-tune the classification according to your needs.  \n\n### Input Fields:\n- **url** → `{{ $json.url }}`  \n- **title** → `{{ $json.title }}`  \n- **description** → `{{ $json.description }}`  \n- **word_count** → `{{ $json.word_count }}`  \n\n### Why use an LLM?  \nA **language model (LLM)** can **analyze** the **URL, title, and description** to identify pages that **most likely contain meaningful and relevant content**.  \nThis allows it to **prioritize valuable pages** and structure the data for **better content discovery and training purposes**. \n\n### **For large websites**  \nIf you have a **very large website**, consider using a **Loop Over Items** node to make the workflow **more robust** and ensure all pages are processed.  \nAlso, using a **Loop Over Items** node make it **easier** to handle:  \n- **Timeouts** \n- **API quotas** \n- **Other scalability issues**\n\n### Tokens usage\nFinally, keep in mind that **more pages mean more tokens and more billed LLM API calls**.\n\n\n\n\n\n\n\n",
+        "height": 1160,
+        "width": 740,
+        "color": 2
+      },
+      "id": "fbb360c3-c65d-4f66-835a-073b89355993",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3056,
+        -736
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Set Field - llms.txt Row\n\nThis node **sets** the row format for the `llms.txt` file.  \n\n### Row Structure:\nEach row follows this format:  \n\n- `- [title](link): description`  \n\nIf the URL **has no description** (from the **Meta Description** in the Screaming Frog export), the row will be:  \n\n- `- [title](link)`  \n",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "a2c1929a-cd7b-4b2d-9b6f-1874cbef1aae",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3856,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Summarize - Concatenate\n\nThis node concatenates all the output from the previous node, ensuring each row is on a separate line.",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "ed428e0b-6025-437b-814b-32a3b5bc1250",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4272,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Set Fields - llms.txt Content\n\nThis node sets the content of the `llms.txt` file using:\n\n- The **website title** provided in the form (first node).\n- The **website description** provided in the form (first node).\n- The output from the previous node, which includes all the URLs, their titles, and their descriptions that will appear in the `llms.txt` file.\n",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "23d119e7-71e8-4d74-be21-ce605eb88a68",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4704,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Generate llms.txt file\n\nThis node **creates** the `llms.txt` file, which can be **downloaded directly** within n8n. \n",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "acff6974-06a6-4d71-8ad4-33d90caf4514",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        5120,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## upload file anywhere\n\nInstead of downloading the file directly from the n8n workflow, you can **replace this node node** with a Drive node (e.g., **Google Drive** or **OneDrive**) to upload the `llms.txt` file to a folder of your choice.  \n  \n**Name the file properly** (e.g., include the website name) to make it easier to find and distinguish between files when working on multiple websites.  \n",
+        "height": 860,
+        "width": 360,
+        "color": 7
+      },
+      "id": "3cc0eb39-7bbd-4217-a0f6-5a93803dc104",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        5536,
+        -432
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "aggregation": "concatenate",
+              "field": "llmTxtRow",
+              "separateBy": "\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0ade750e-94f6-4045-8aca-e3c14f2c259f",
+      "name": "Summarize - Concatenate",
+      "type": "n8n-nodes-base.summarize",
+      "position": [
+        4400,
+        112
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "97062a99-e944-4e1e-89b1-62cf9e3462dd",
+              "name": "llmsTxtFile",
+              "type": "string",
+              "value": "=# {{ $('Form - Screaming frog internal_html.csv upload').item.json['What is the name of your website?'] }}\n> {{ $('Form - Screaming frog internal_html.csv upload').item.json['Can you provide a short description of your website? (in the language of the website)'] }}\n\n{{ $json.concatenated_llmTxtRow }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fc177ae6-e244-4fab-9e93-bb5712bb1ede",
+      "name": "Set Fields - llms.txt Content",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        4832,
+        112
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {},
+      "id": "04e748a7-6b19-46d0-807f-19e49d0ac527",
+      "name": "upload file anywhere",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        5664,
+        112
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "95e75caa-8110-476b-9cb1-73c15361fa56",
+              "name": "llmTxtRow",
+              "type": "string",
+              "value": "=- [{{ $json.title }}]({{ $json.url }}){{ $json.description ? ': ' + $json.description : '' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "783434d8-210d-4b9b-9ee4-9bdf95a2ad22",
+      "name": "Set Field - llms.txt Row",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        3984,
+        112
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "# Generate AI-Ready llms.txt Files from Screaming Frog Website Crawls  \n\nThis workflow helps you generate an **llms.txt** file (if you're unfamiliar with it, check out [this article](https://towardsdatascience.com/llms-txt-414d5121bcb3/)) using a **Screaming Frog export**.  \n\n[Screaming Frog](https://www.screamingfrog.co.uk/seo-spider/) is a well-known website crawler.  \nYou can easily crawl a website. Then, export the **\"internal_html\"** section in CSV format.  \n\n## How It Works: \n\nA **form** allows you to enter:  \n- The **name of the website**  \n- A **short description**  \n- The **internal_html.csv** file from your Screaming Frog export  \n\n\nOnce the form is submitted, the **workflow is triggered automatically**, and you can **download the llms.txt file directly from n8n**. \n\n## Downloading the File\nSince the last node in this workflow is **\"Convert to File\"**, you will need to **download the file directly from the n8n UI**.  \nHowever, you can easily **add a node** (e.g., Google Drive, OneDrive) to automatically upload the file **wherever you want**.  \n\n## AI-Powered Filtering (Optional):  \nThis workflow includes a **text classifier node**, which is **deactivated by default**.  \n- You can **activate it** to apply a more **intelligent filter** to select URLs for the `llms.txt` file.  \n- Consider modifying the **description** in the classifier node to specify the type of URLs you want to include.  \n\n## How to Use This Workflow  \n\n1. **Crawl the website** you want to generate an `llms.txt` file for using **Screaming Frog**.  \n2. **Export the \"internal_html\"** section in CSV format.  \n   ![Screaming Frog internal html export](https://i.imgur.com/M0nJQiV.png)  \n3. In **n8n**, click **\"Test Workflow\"**, fill in the form, and **upload** the `internal_html.csv` file.  \n4. Once the workflow is complete, go to the **\"Export to File\"** node and **download the output**.  \n\n**That's it! You now have your llms.txt file!**  \n\n\n\n**Recommended Usage:**  \nUse this workflow **directly in the n8n UI by clicking** 'Test Workflow' and uploading the file in the form.",
+        "height": 1380,
+        "width": 700,
+        "color": 5
+      },
+      "id": "0df123ca-335b-4870-b360-9cbe01ec13be",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        592,
+        -960
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "formTitle": "llms.txt Generator - From Screaming Frog export",
+        "formDescription": "Generate a simple llms.txt file from a Screaming Frog Export\nIt is recommended to use the internal_html.csv export, although internal_all.csv will also work.\n\nFill in the fields in this form.Just fill in the fields in this form  😄",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "What is the name of your website?",
+              "placeholder": "Example : The best website ever",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Can you provide a short description of your website? (in the language of the website)",
+              "placeholder": "Example : This is the best website ever because all the content is engaging and valuable.",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "screaming_frog_export",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".csv",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "buttonLabel": "Get the llms.txt file"
+        }
+      },
+      "id": "08f4c633-9078-4352-947c-0042fb8d34be",
+      "name": "Form - Screaming frog internal_html.csv upload",
+      "type": "n8n-nodes-base.formTrigger",
+      "position": [
+        1472,
+        128
+      ],
+      "webhookId": "8791f39a-3d81-405c-b177-0a733ebf74cb",
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "operation": "xls",
+        "binaryPropertyName": "screaming_frog_export",
+        "options": {}
+      },
+      "id": "6f801fe9-dbdd-45cd-a0d3-85191fc63241",
+      "name": "Extract data from Screaming Frog file",
+      "type": "n8n-nodes-base.extractFromFile",
+      "position": [
+        1920,
+        128
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "llmsTxtFile",
+        "options": {
+          "encoding": "utf8",
+          "fileName": "llms.txt"
+        }
+      },
+      "id": "7c187bc8-5d68-4048-a683-4c5fd324edcf",
+      "name": "Generate llms.txt file",
+      "type": "n8n-nodes-base.convertToFile",
+      "position": [
+        5232,
+        112
+      ],
+      "typeVersion": 1.1
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-08-05T03:47:46.000Z",
+  "versionId": "5abce29a-760e-40fd-b486-ecea32a65254"
+}
