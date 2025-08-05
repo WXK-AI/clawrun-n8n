@@ -1,0 +1,652 @@
+{
+  "active": false,
+  "connections": {
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "My RSS 01",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "My RSS 02",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "My RSS 03",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "My RSS 04",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "My RSS 01": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "My RSS 02": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "My RSS 03": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "My RSS 04": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-05T02:38:26.767Z",
+  "id": "ovogIq308uhCDYtw",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "30d4f694-9378-42b4-b1d5-cbc38fb3e7fe",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              },
+              "leftValue": "={{ $json.pubDate }}",
+              "rightValue": "={{ $today.minus({ days: 1 }) }}"
+            },
+            {
+              "id": "cc3c4651-56ef-460e-a04f-b1a833c95730",
+              "leftValue": "={{ $('Edit Fields3').item.json.date }}",
+              "rightValue": "={{ $today.minus({ days: 1 }) }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "8955d47e-0cd9-4cd6-87f4-80a4d25c3493",
+      "name": "Filter",
+      "type": "n8n-nodes-base.filter",
+      "position": [
+        -976,
+        -192
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e2ffe594-180d-4e1d-b869-8056ac67015d",
+              "name": "title",
+              "type": "string",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "id": "87c5a171-9ab9-4043-a72a-32aec218fe63",
+              "name": "pubDate",
+              "type": "string",
+              "value": "={{ $json.pubDate }}"
+            },
+            {
+              "id": "978b05c9-6e6b-4a18-bc06-4de785b19413",
+              "name": "conteudo",
+              "type": "string",
+              "value": "={{ $json['content:encoded'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "66f833bf-9ba1-4b99-bb52-3fc9f7c9136b",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1392,
+        -272
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e2ffe594-180d-4e1d-b869-8056ac67015d",
+              "name": "title",
+              "type": "string",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "id": "87c5a171-9ab9-4043-a72a-32aec218fe63",
+              "name": "pubDate",
+              "type": "string",
+              "value": "={{ $json.pubDate }}"
+            },
+            {
+              "id": "bae1b890-716b-442c-8714-b4ece09063d7",
+              "name": "conteudo",
+              "type": "string",
+              "value": "={{ $json.contentSnippet }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9e6e5dca-f295-428c-85a3-f44247e7ceee",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1392,
+        -64
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e2ffe594-180d-4e1d-b869-8056ac67015d",
+              "name": "title",
+              "type": "string",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "id": "87c5a171-9ab9-4043-a72a-32aec218fe63",
+              "name": "pubDate",
+              "type": "string",
+              "value": "={{ $json.pubDate }}"
+            },
+            {
+              "id": "978b05c9-6e6b-4a18-bc06-4de785b19413",
+              "name": "conteudo",
+              "type": "string",
+              "value": "={{ $json.contentSnippet }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b799df2a-4df6-4e11-aa18-ca1a558941d3",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1392,
+        144
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e2ffe594-180d-4e1d-b869-8056ac67015d",
+              "name": "title",
+              "type": "string",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "id": "87c5a171-9ab9-4043-a72a-32aec218fe63",
+              "name": "creator",
+              "type": "string",
+              "value": "={{ $json.creator }}"
+            },
+            {
+              "id": "978b05c9-6e6b-4a18-bc06-4de785b19413",
+              "name": "conteudo",
+              "type": "string",
+              "value": "={{ $json['content:encoded'] }}"
+            },
+            {
+              "id": "6672b94b-f1d2-451e-be64-e9627e3f2a36",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a8866c5d-1cbe-48b9-b317-4da3d3cf6c58",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1392,
+        -496
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "numberInputs": 10
+      },
+      "id": "6f093471-db73-44b8-90f0-93f6efda7b31",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        -1168,
+        -208
+      ],
+      "typeVersion": 3.1
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "id": "0f37f66c-77e5-4be7-8c63-bcecf28f21c8",
+      "name": "Limit",
+      "type": "n8n-nodes-base.limit",
+      "position": [
+        -768,
+        -192
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "include": "specifiedFields",
+        "fieldsToInclude": "title, date, conteudo",
+        "options": {}
+      },
+      "id": "83f1210f-12e0-40af-8ead-27995b9b18d6",
+      "name": "Aggregate",
+      "type": "n8n-nodes-base.aggregate",
+      "position": [
+        -576,
+        -192
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 3
+            }
+          ]
+        }
+      },
+      "id": "b5693a9a-d3dc-4bdd-96f2-19a87e5c1f6c",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -1952,
+        -176
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {},
+      "id": "314035f7-4372-4bc9-b9c3-e1d83b84cd0d",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        592,
+        -192
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## About Limit\nlimits the analysis to the 10 most recent articles"
+      },
+      "id": "8fc93763-3129-4434-b8b4-8c13c6a5c80a",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -832,
+        -16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://www.nature.com/nature.rss",
+        "options": {
+          "ignoreSSL": false
+        }
+      },
+      "id": "325c03ba-909d-4477-88fb-3b48ff6aa955",
+      "name": "My RSS 01",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -1616,
+        -496
+      ],
+      "typeVersion": 1.1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.technologyreview.com/topic/artificial-intelligence/feed/",
+        "options": {}
+      },
+      "id": "95454b76-10f0-4ebf-8e59-025118c32e8f",
+      "name": "My RSS 02",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -1616,
+        -272
+      ],
+      "typeVersion": 1.1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://the-decoder.com/feed/",
+        "options": {}
+      },
+      "id": "f1553a01-d80a-43dd-b025-6e43d0cc528a",
+      "name": "My RSS 03",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -1616,
+        -64
+      ],
+      "typeVersion": 1.1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.theverge.com/rss/index.xml",
+        "options": {
+          "ignoreSSL": false
+        }
+      },
+      "id": "6c4f9a7b-9246-469a-a139-8cc390bc0cdc",
+      "name": "My RSS 04",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "position": [
+        -1616,
+        144
+      ],
+      "typeVersion": 1.1,
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## About RSS\nYou can add how many RSS you want"
+      },
+      "id": "08bc0b01-1990-4e5c-937b-d0382cbebfcf",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1664,
+        304
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## About Resum\nyou can send to your whatsapp api, or email, drive..."
+      },
+      "id": "80a6b807-5eda-4b25-b0ec-ed6b4800bfd4",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -112,
+        16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## About Trgger\nSet trigger how you wish"
+      },
+      "id": "298f5e2e-73db-4bf7-a986-87b34ff28b74",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2016,
+        -16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## System message (change if you want)\nI've received 10 news articles via RSS. Please analyze them and provide a concise summary of the top 3 to 5 main highlights. My goal is to get a quick overview of what's most relevant in these articles."
+      },
+      "id": "de074f5d-ef6e-4129-a7ab-b787337a9967",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -384,
+        16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash-lite-preview-06-17",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash-lite-preview-06-17"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=I've received news articles via RSS. Please analyze them and provide a concise summary of the top 3 to 5 main highlights. My goal is to get a quick overview of what's most relevant in these articles. Return the email using clean HTML format and include the link of the original feed that can directly used for sending email.\n1.{{ $json.data[0].title }}{{ $json.data[0].conteudo }}\n2.{{ $json.data[1].title }}{{ $json.data[1].conteudo }}\n3.{{ $json.data[2].title }}{{ $json.data[2].conteudo }}\n4.{{ $json.data[3].title }}{{ $json.data[3].conteudo }}\n5.{{ $json.data[4].title }}{{ $json.data[4].conteudo }}\n6.{{ $json.data[5].title }}{{ $json.data[5].conteudo }}\n7.{{ $json.data[6].title }}{{ $json.data[6].conteudo }}\n8.{{ $json.data[7].title }}{{ $json.data[7].conteudo }}\n9.{{ $json.data[8].title }}{{ $json.data[8].conteudo }}\n10.{{ $json.data[9].title }}{{ $json.data[9].conteudo }}"
+            }
+          ]
+        },
+        "simplify": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -192
+      ],
+      "id": "85720370-78e3-4617-8e42-32e30676886c",
+      "name": "Message a model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "qmsSZ71hhdItGeAn",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "xkwong040504@gmail.com",
+        "subject": "RSS Feed",
+        "message": "={{ $json.candidates[0].content.parts[0].text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        160,
+        -192
+      ],
+      "id": "e2ee9f55-308f-479b-94e0-034fd853fe67",
+      "name": "Send a message",
+      "webhookId": "fc06bc08-f446-4121-a70f-5dcab622112d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "2kCmeRPqwaK7lgR9",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-08-05T03:38:02.000Z",
+  "versionId": "90488cc8-6cfe-424f-8477-623341a4d9c2"
+}
